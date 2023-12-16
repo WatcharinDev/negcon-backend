@@ -12,6 +12,14 @@ export class user_sign_up {
     last_name: string;
     @ApiProperty()
     tel:string;
+    @ApiProperty()
+    birthday:string;
+    @ApiProperty()
+    role_id:number
+    @ApiProperty()
+    role_code:string
+    @ApiProperty()
+    Introduction:string
 }
 export class user_sign_in{
     @ApiProperty()

@@ -26,8 +26,14 @@ export class users {
   @Column({ type: 'varchar', length: 3, nullable: true })
   role_code: string;
 
+  @CreateDateColumn({ type: 'timestamp', name: 'birthday' })
+  birthday: string;
+
   @Column({ type: 'varchar', length: 10, nullable: true })
   tel: string;
+
+  @Column({ type: 'multilinestring', nullable: true })
+  introduction: string;
 
   @Column({ type: 'varchar', length: 30, nullable: true, name: 'create_by' })
   created_by: string;
