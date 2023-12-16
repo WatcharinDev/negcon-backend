@@ -26,7 +26,7 @@ export class UserService {
             user_entity.first_name = req.first_name
             user_entity.last_name = req.last_name
             user_entity.birthday=req.birthday 
-            user_entity.introduction=req.Introduction
+            user_entity.introduction=req.introduction
             user_entity.role_id = req.role_id
             user_entity.role_code = req.role_code
             user_entity.tel = req.tel

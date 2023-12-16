@@ -19,7 +19,7 @@ export class user_sign_up {
     @ApiProperty()
     role_code:string
     @ApiProperty()
-    Introduction:string
+    introduction:string
 }
 export class user_sign_in{
     @ApiProperty()
