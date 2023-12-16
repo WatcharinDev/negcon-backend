@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
+import { users } from './entities/users.entity';
 
 
 
@@ -12,9 +16,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'doadmin',
       password: 'AVNS_n7j_3AxWj6uCd4TqCxc',
       database: 'defaultdb',
-      entities: [],
+      entities: [users],
       synchronize: true,
     }),
+    UserModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
