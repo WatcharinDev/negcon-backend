@@ -18,6 +18,9 @@ import { users } from './entities/users.entity';
       database: 'defaultdb',
       entities: [users],
       synchronize: true,
+      ssl: {
+        ca: process.env.SSL_CERT,
+      },
     }),
     UserModule,
   ],
