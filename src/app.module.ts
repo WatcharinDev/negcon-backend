@@ -10,11 +10,11 @@ import { users } from './entities/users.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'negcon-do-user-14756404-0.c.db.ondigitalocean.com',
+      type: 'postgres',
+      host: 'negcon-db-do-user-14756404-0.c.db.ondigitalocean.com',
       port: 25060,
       username: 'doadmin',
-      password: 'AVNS_n7j_3AxWj6uCd4TqCxc',
+      password: 'AVNS_DuIfEWu-vtO1rn0vy5r',
       database: 'defaultdb',
       entities: [users],
       synchronize: true,
@@ -25,3 +25,10 @@ import { users } from './entities/users.entity';
   providers: [AppService],
 })
 export class AppModule {}
+
+// username = doadmin
+// password = AVNS_DuIfEWu-vtO1rn0vy5r
+// host = negcon-db-do-user-14756404-0.c.db.ondigitalocean.com
+// port = 25060
+// database = defaultdb
+// sslmode = require

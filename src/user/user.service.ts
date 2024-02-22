@@ -25,10 +25,10 @@ export class UserService {
             user_entity.password = hash
             user_entity.first_name = req.first_name
             user_entity.last_name = req.last_name
-            user_entity.birthday=req.birthday 
+            user_entity.birthday="2023-11-12"
             user_entity.introduction=req.introduction
-            user_entity.role_id = req.role_id
-            user_entity.role_code = req.role_code
+            user_entity.role_id = 1
+            user_entity.role_code = "CS"
             user_entity.tel = req.tel
             user_entity.created_by = "system"
             user_entity.created_at = date
