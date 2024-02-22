@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, PrimaryColumn, Timestamp } from 'typeorm';
 
 @Entity()
 export class users {
@@ -35,15 +35,15 @@ export class users {
   @Column({ type: 'longtext' })
   introduction: string;
 
-  @Column({ type: 'varchar', length: 30, nullable: true, name: 'create_by' })
-  created_by: string;
+  // @Column({ type: 'varchar', length: 30, nullable: true, name: 'create_by' })
+  // created_by: string;
 
-  @CreateDateColumn({ type: 'timestamp', name: 'create_at' })
-  created_at: Date;
+  // @CreateDateColumn({ type: 'timestamp', name: 'create_at' })
+  // created_at: Timestamp;
 
-  @Column({ type: 'varchar', length: 30, nullable: true, name: 'update_by' })
-  update_by: string;
+  // @Column({ type: 'varchar', length: 30, nullable: true, name: 'update_by' })
+  // update_by: string;
 
-  @CreateDateColumn({ type: 'timestamp', name: 'update_at' })
-  update_at: Date;
+  // @CreateDateColumn({ type: 'timestamp', name: 'update_at' })
+  // update_at: Timestamp;
 }

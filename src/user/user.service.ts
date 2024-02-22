@@ -20,6 +20,7 @@ export class UserService {
             const hash = await bcrypt.hashSync(req.password, 10)
             console.log(hash)
             const user_entity = new users()
+            user_entity.id=0;
             user_entity.code = uuidv4()
             user_entity.username = req.username.toLocaleLowerCase()
             user_entity.password = hash
@@ -30,8 +31,7 @@ export class UserService {
             user_entity.role_id = 1
             user_entity.role_code = "CS"
             user_entity.tel = req.tel
-            user_entity.created_by = "system"
-            user_entity.created_at = date
+
             const result = this.userRepository.save(user_entity)
             return {
                 code: 200,
@@ -94,8 +94,8 @@ export class UserService {
                 role_id: user.role_id,
                 role_code: user.role_code,
                 tel: user.tel,
-                created_by: user.created_by,
-                created_at: user.created_at,
+                // created_by: '',
+                // created_at: undefined
             };
 
             return {

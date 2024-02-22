@@ -10,17 +10,13 @@ import { users } from './entities/users.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: 'negcon-db-do-user-14756404-0.c.db.ondigitalocean.com',
       port: 25060,
       username: 'doadmin',
-      password: 'AVNS_DuIfEWu-vtO1rn0vy5r',
+      password: 'AVNS_Inllz9g6cYqSCV0McPj',
       database: 'defaultdb',
-      entities: [users],
-      synchronize: true,
-      ssl: {
-        ca: process.env.SSL_CERT,
-      },
+      entities: [users]
     }),
     UserModule,
   ],

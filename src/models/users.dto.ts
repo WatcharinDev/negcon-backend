@@ -54,6 +54,6 @@ export interface user_data{
     role_id: number;
     role_code: string;
     tel: string;
-    created_by: string;
-    created_at: Date;
+    // created_by: string;
+    // created_at: Date;
 }
