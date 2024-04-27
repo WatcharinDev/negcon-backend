@@ -15,9 +15,9 @@ export class AuthController {
         return this.authService.signUp(req) as any
     }
 
-    // @ApiOperation({ summary: 'Signin', description: 'Signin user biddy' })
-    // @Post('/signin')
-    // async SignInController(@Body() req: user_sign_in): Promise<user_session | response_message> {
-    //     return await this.authService.signIn(req) as user_session | response_message
-    // }
+    @ApiOperation({ summary: 'Signin', description: 'Signin user biddy' })
+    @Post('/signin')
+    async SignInController(@Body() req: user_sign_in): Promise<user_session | response_message> {
+        return await this.authService.signIn(req) as user_session | response_message
+    }
 }

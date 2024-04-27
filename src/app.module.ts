@@ -8,6 +8,9 @@ import { user } from './entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { PostModule } from './post/post.module';
+import { UploadsModule } from './uploads/uploads.module';
+import { post } from './entities/post.entity';
 const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
 @Module({
   imports: [
@@ -22,13 +25,16 @@ const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
       username: 'doadmin',
       password: 'AVNS_-TpsaK_fAHgGsTmFQCl',
       database: 'negcon-database',
-      entities: [user],
+      entities: [user,post],
       synchronize: true,
       ssl:{
         ca: fs.readFileSync(certPath),
       }
     }),
     AuthModule,
+    PostModule,
+    PostModule,
+    UploadsModule
   ],
 
   controllers: [AppController],

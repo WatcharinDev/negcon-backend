@@ -31,11 +31,25 @@ export class AuthService {
             user_entity.role_code = req.role_code
             user_entity.role_name = "Super Admin"
             user_entity.tel = req.tel
+            user_entity.status = true
+            user_entity.created_by = "System"
+            user_entity.created_at = date
+            user_entity.update_by = "System"
+            user_entity.update_at = date
 
-            this.userRepository.save(user_entity)
-            return {
-                statusCode: HttpStatus.OK,
-                message: `User ${req.email} created successfully!`
+            const response = await this.userRepository.save(user_entity)
+            if (response.id) {
+                return {
+                    statusCode: HttpStatus.OK,
+                    message: `User ${req.email} created successfully!`
+                }
+
+            } else {
+                return {
+                    statusCode: HttpStatus.BAD_REQUEST,
+                    message: `User creation failed`
+                }
+
             }
 
         } catch (error) {
@@ -60,58 +74,58 @@ export class AuthService {
             }
         }
     }
-  //  async signIn(req: user_sign_in): Promise<response_data> {
-        // try {
-        //     const user = await this.userRepository.findOneBy({ email: req.email.toLocaleLowerCase() })
-        //     if (user && bcrypt.compare(req.password, user.password)) {
-        //         const payload: access_token = {
-        //             code: user.code,
-        //             email: user.email,
-        //             first_name: user.first_name,
-        //             last_name: user.last_name,
-        //             role_id: user.role_id,
-        //             role_code: user.role_code,
-        //             role_name: user.role_name
-        //         };
-        //         const userResponse: user_session = {
-        //             id: user.id,
-        //             code: user.code,
-        //             profile_img: user.profile_img,
-        //             email: user.email,
-        //             first_name: user.first_name,
-        //             last_name: user.last_name,
-        //             access_token: await this.jwtService.signAsync(payload),
-        //             role_id: user.role_id,
-        //             role_code: user.role_code,
-        //             role_name: user.role_name
-        //         }
-        //         return {
-        //             statusCode: HttpStatus.OK,
-        //             data: userResponse,
-        //             message: "Login successfully!",
-        //         };
-        //     } else {
-        //         throw new UnauthorizedException();
-        //     }
-        // } catch (error) {
-        //     if (error instanceof Error) {
-        //         throw new HttpException(
-        //             {
-        //                 statusCode: HttpStatus.BAD_REQUEST,
-        //                 message: 'User creation failed',
-        //                 details: error.message,
-        //             },
-        //             HttpStatus.BAD_REQUEST,
-        //         );
-        //     } else {
-        //         throw new HttpException(
-        //             {
-        //                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-        //                 message: 'An internal server error occurred',
-        //             },
-        //             HttpStatus.INTERNAL_SERVER_ERROR,
-        //         );
-        //     }
-        // }
-  //  }
+    async signIn(req: user_sign_in): Promise<response_data> {
+        try {
+            const user = await this.userRepository.findOneBy({ email: req.email.toLocaleLowerCase(), status: true })
+            if (user && bcrypt.compare(req.password, user.password)) {
+                const payload: access_token = {
+                    code: user.code,
+                    email: user.email,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    role_id: user.role_id,
+                    role_code: user.role_code,
+                    role_name: user.role_name
+                };
+                const userResponse: user_session = {
+                    id: user.id,
+                    code: user.code,
+                    profile_img: user.profile_img,
+                    email: user.email,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    access_token: await this.jwtService.signAsync(payload),
+                    role_id: user.role_id,
+                    role_code: user.role_code,
+                    role_name: user.role_name
+                }
+                return {
+                    statusCode: HttpStatus.OK,
+                    data: userResponse,
+                    message: "Login successfully!",
+                };
+            } else {
+                throw new UnauthorizedException();
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new HttpException(
+                    {
+                        statusCode: HttpStatus.BAD_REQUEST,
+                        message: 'User creation failed',
+                        details: error.message,
+                    },
+                    HttpStatus.BAD_REQUEST,
+                );
+            } else {
+                throw new HttpException(
+                    {
+                        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+                        message: 'An internal server error occurred',
+                    },
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                );
+            }
+        }
+    }
 }

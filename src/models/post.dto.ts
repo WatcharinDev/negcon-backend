@@ -24,5 +24,5 @@ export class post_like{
     @ApiProperty()
     post_id:number
     @ApiProperty()
-    posts_likes:string[]
+    post_likes:string[]
 }
