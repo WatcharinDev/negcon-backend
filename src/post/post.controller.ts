@@ -14,22 +14,29 @@ export class PostController {
 
     @ApiOperation({ summary: 'Create Post', description: 'create post by user' })
     @UseGuards(AuthGuard)
-    @Post("/create")
+    @Post("/add")
     CreatePostController(@Body() req: post_form_action, @Req() request): response_data {
-
-        console.log("req", request.user.code)
         return this.postService.createPost(req, request) as any
     }
+
     @ApiOperation({ summary: 'Get Post', description: 'get all post by user' })
     @UseGuards(AuthGuard)
     @Get("/get/all")
     GetAllPostsController(@Query('page') page: number = 1, @Query('size') size: number = 10, @Req() request: any,): response_data_list {
         return this.postService.getAllPosts(page, size) as unknown as response_data_list
     }
+
     @ApiOperation({ summary: 'Get Post', description: 'get all post by user' })
     @UseGuards(AuthGuard)
     @Post("/like")
     LikePostsController(@Body() req: post_like, @Req() request): response_data {
         return this.postService.likePost(req, request) as unknown as response_data
+    }
+
+    @ApiOperation({ summary: 'Get Post', description: 'get all post by user' })
+    @UseGuards(AuthGuard)
+    @Get("/get/user/all")
+    GetPostsController(@Query('page') page: number = 1, @Query('size') size: number = 10, @Req() request: any,): response_data_list {
+        return this.postService.getUserPosts(page, size, request.user.code) as unknown as response_data_list
     }
 }

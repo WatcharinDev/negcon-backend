@@ -35,6 +35,7 @@ export class UploadsController {
   }
 
   @Post('profile/image')
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
