@@ -32,8 +32,8 @@ export class PostService {
                 .insert()
                 .into('post')
                 .values(post_entity)
-                .orIgnore()
                 .execute()
+            console.log('post_entity',response)
             return {
                 statusCode: HttpStatus.OK,
                 data: response,
@@ -67,7 +67,7 @@ export class PostService {
     async getAllPosts(page: number | string, size: number | string): Promise<response_data_list> {
         try {
             const skip = (parseInt(page.toString()) - 1) * parseInt(size.toString());
-            const response = await this.postRepository.createQueryBuilder("post").where("post.status = :status", { status: "1" }).skip(skip).take(size as number).orderBy('post.created_at', 'DESC').getRawMany()
+            const response = await this.postRepository.createQueryBuilder("post").where("post.status = :status", { status: true }).skip(skip).take(size as number).orderBy('post.created_at', 'DESC').getRawMany()
             return {
                 statusCode: HttpStatus.OK,
                 data: response,
@@ -108,14 +108,16 @@ export class PostService {
                 likes.push(session.user.code)
             }
             const response = await this.postRepository.createQueryBuilder("post").update('post')
-                .set({ likes: JSON.stringify(likes) })
+                .set({ likes: likes })
                 .where("id = :id", { id: data.post_id })
                 .execute()
+            console.log('response',response)
             return {
                 statusCode: HttpStatus.OK,
                 data: response,
                 message: "Liked post successfully"
             }
+            
         } catch (error) {
             if (error instanceof Error) {
                 throw new HttpException(
