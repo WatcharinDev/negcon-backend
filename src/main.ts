@@ -10,7 +10,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.setGlobalPrefix('api/v1')
-  // app.use('/uploadProfile/profile', express.static(path.join(__dirname, '..', 'uploadProfile', 'profile')));
   const config = new DocumentBuilder()
     .setTitle('New Negcon BackEnd')
     .setDescription('API description')

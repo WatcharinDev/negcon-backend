@@ -26,10 +26,11 @@ export class PostController {
         return this.postService.getAllPosts(page, size) as unknown as response_data_list
     }
 
-    @ApiOperation({ summary: 'Get Post', description: 'get all post by user' })
+    @ApiOperation({ summary: 'Like Post' })
     @UseGuards(AuthGuard)
     @Post("/like")
     LikePostsController(@Body() req: post_like, @Req() request): response_data {
+        console.log('req',req)
         return this.postService.likePost(req, request) as unknown as response_data
     }
 
