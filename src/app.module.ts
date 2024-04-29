@@ -11,6 +11,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { PostModule } from './post/post.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { post } from './entities/post.entity';
+import { UserModule } from './user/user.module';
 const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
 @Module({
   imports: [
@@ -20,11 +21,11 @@ const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'db-negcon-do-user-14756404-0.c.db.ondigitalocean.com',
-      port: 25060,
-      username: 'doadmin',
-      password: 'AVNS_-TpsaK_fAHgGsTmFQCl',
-      database: 'negcon-database',
+      host: process.env.DATABASE_HOSTNAME,
+      port: parseInt(process.env.DATABASE_PORT) || 25060,
+      username: process.env.PDATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [user,post],
       synchronize: true,
       ssl:{
@@ -33,8 +34,8 @@ const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
     }),
     AuthModule,
     PostModule,
-    PostModule,
-    UploadsModule
+    UploadsModule,
+    UserModule
   ],
 
   controllers: [AppController],

@@ -1,6 +1,6 @@
 
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import { createReadStream, createWriteStream, existsSync, mkdirSync, writeFileSync } from 'fs';
+import {  createWriteStream, existsSync, mkdirSync } from 'fs';
 import { extname, join } from 'path';
 import { response_file } from 'src/models/utility.dto';
 @Injectable()
@@ -20,7 +20,7 @@ export class UploadsService {
       const writeStream = createWriteStream(filePath);
       writeStream.write(file.buffer);
       writeStream.end();
-      const baseUrl = 'https://backend.biddy-negcon.com';
+      const baseUrl = process.env.BASE_URL;
       const relativePath = filePath.replace(currentWorkingDir, '').replace(/\\/g, '/');
       const fullUrl = `${baseUrl}${relativePath}`;
       return {
@@ -64,7 +64,7 @@ export class UploadsService {
       const writeStream = createWriteStream(filePath);
       writeStream.write(file.buffer);
       writeStream.end();
-      const baseUrl = 'https://backend.biddy-negcon.com';
+      const baseUrl = process.env.BASE_URL;
       const relativePath = filePath.replace(currentWorkingDir, '').replace(/\\/g, '/');
       const fullUrl = `${baseUrl}${relativePath}`;
       return {
