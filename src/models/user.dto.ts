@@ -19,8 +19,6 @@ export class user_sign_up {
     @ApiProperty()
     role_id:number
     @ApiProperty()
-    role_code:string
-    @ApiProperty()
     introduction:string
 }
 export class user_sign_in{
@@ -58,7 +56,7 @@ export interface user_data{
     email: string;
     first_name: string;
     last_name: string;
-    role_id: number;
+   // role_id: number;
     role_code: string;
     role_name:string
     tel: string;

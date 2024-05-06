@@ -4,10 +4,6 @@ export class post_form_action {
     @ApiProperty()
     id:number
     @ApiProperty()
-    user_name: string
-    @ApiProperty()
-    profile_img: string
-    @ApiProperty()
     content: string
     @ApiProperty()
     images: string[]

@@ -18,9 +18,7 @@ export class PostService {
         try {
             const post_entity = new post
             post_entity.user_code = session.user.code
-            post_entity.user_name = req.user_name
             post_entity.content = req.content
-            post_entity.profile_img = req.profile_img
             post_entity.images = req.images
             post_entity.likes = []
             post_entity.status = true
@@ -33,7 +31,7 @@ export class PostService {
                 .into('post')
                 .values(post_entity)
                 .execute()
-            console.log('post_entity',response)
+            console.log('post_entity', response)
             return {
                 statusCode: HttpStatus.OK,
                 data: response,
@@ -67,7 +65,27 @@ export class PostService {
     async getAllPosts(page: number | string, size: number | string): Promise<response_data_list> {
         try {
             const skip = (parseInt(page.toString()) - 1) * parseInt(size.toString());
-            const response = await this.postRepository.createQueryBuilder("post").where("post.status = :status", { status: true }).skip(skip).take(size as number).orderBy('post.created_at', 'DESC').getRawMany()
+            const response = await this.postRepository.createQueryBuilder('post')
+                .leftJoin('user', 'u', 'u.code = post.user_code')
+                .select([
+                    'post.id AS id',
+                    'post.content AS post_content',
+                    'post.images AS post_images',
+                    'post.created_at AS post_created_at',
+                    'post.likes AS post_likes',
+                    'u.id AS user_id',
+                    'u.email AS email',
+                    'u.first_name AS first_name',
+                    'u.last_name AS last_name',
+                    'u.profile_img AS profile_img',
+
+                 
+                ])
+                .where('post.status = :status', { status: true })
+                .orderBy('post.created_at', 'DESC')
+                .skip(skip)
+                .take(size as number)
+                .getRawMany();
             return {
                 statusCode: HttpStatus.OK,
                 data: response,
@@ -111,13 +129,13 @@ export class PostService {
                 .set({ likes: likes })
                 .where("id = :id", { id: data.post_id })
                 .execute()
-            console.log('response',response)
+            console.log('response', response)
             return {
                 statusCode: HttpStatus.OK,
                 data: response,
                 message: "Liked post successfully"
             }
-            
+
         } catch (error) {
             if (error instanceof Error) {
                 throw new HttpException(
@@ -144,7 +162,23 @@ export class PostService {
     async getUserPosts(page: number | string, size: number | string, code: string): Promise<response_data_list> {
         try {
             const skip = (parseInt(page.toString()) - 1) * parseInt(size.toString());
-            const response = await this.postRepository.createQueryBuilder("post").where("post.status = :status AND post.code = :code", { status: true, code: code }).skip(skip).take(size as number).orderBy('post.created_at', 'DESC').getRawMany()
+            const response = await this.postRepository
+            .createQueryBuilder("post")
+            .leftJoin('user', 'u', 'u.code = post.user_code')
+            .select([
+                'post.id AS id',
+                'post.content AS post_content',
+                'post.images AS post_images',
+                'post.created_at AS post_created_at',
+                'post.likes AS post_likes',
+                'u.id AS user_id',
+                'u.email AS email',
+                'u.first_name AS first_name',
+                'u.last_name AS last_name',
+                'u.profile_img AS profile_img',
+             
+            ])
+            .where("post.status = :status AND post.code = :code", { status: true, code: code }).skip(skip).take(size as number).orderBy('post.created_at', 'DESC').getRawMany()
             return {
                 statusCode: HttpStatus.OK,
                 data: response,

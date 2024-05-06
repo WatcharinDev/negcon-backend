@@ -1,22 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { user } from './user.entity';
 
 @Entity()
-export class post {
+export class role {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ type: 'text'})
-    user_code: string;
+    code: string;
 
-    @Column({ type: 'text' })
-    content: string;
-
-    @Column({ type: 'text',array:true, nullable: true })
-    images: string[]; 
- 
-    @Column({ type: 'text',array:true, nullable: true })
-    likes: string[]; 
+    @Column({ type: 'varchar', length: 100})
+    name: string;
 
     @Column({type:'boolean'})
     status:boolean
@@ -32,7 +26,4 @@ export class post {
 
     @CreateDateColumn({ type: 'date', name: 'update_at' })
     update_at: Date;
-
-    // @ManyToOne(() => user, user => user.code) // Many posts belong to one user
-    // user: user;
 }

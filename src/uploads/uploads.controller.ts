@@ -53,6 +53,6 @@ export class UploadsController {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
-    return this.uploadsService.uploadProfileImage(file, request) as unknown as response_file
+    return this.uploadsService.uploadProfileImage(file, request.user.code) as unknown as response_file
   }
 }

@@ -1,6 +1,6 @@
 
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import {  createWriteStream, existsSync, mkdirSync } from 'fs';
+import { createWriteStream, existsSync, mkdirSync } from 'fs';
 import { extname, join } from 'path';
 import { response_file } from 'src/models/utility.dto';
 @Injectable()
@@ -49,9 +49,9 @@ export class UploadsService {
       }
     }
   }
-  async uploadProfileImage(file: Express.Multer.File, request: any): Promise<response_file> {
+  async uploadProfileImage(file: Express.Multer.File, code: string): Promise<response_file> {
     const currentWorkingDir = process.cwd();
-    const uploadDirectory = join(currentWorkingDir, 'uploads', 'profile', request.user.code);
+    const uploadDirectory = join(currentWorkingDir, 'uploads', 'profile', code);
     if (!existsSync(uploadDirectory)) {
       mkdirSync(uploadDirectory, { recursive: true });
     }
