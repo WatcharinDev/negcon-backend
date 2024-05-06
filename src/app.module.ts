@@ -12,12 +12,19 @@ import { PostModule } from './post/post.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { post } from './entities/post.entity';
 import { UserModule } from './user/user.module';
+import { RoleController } from './role/role.controller';
+import { RoleService } from './role/role.service';
+import { RoleModule } from './role/role.module';
+import { role } from './entities/role.entity';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { hostname } from 'os';
+import { temp_resetpassword } from './entities/temp_resetpassword.entity';
 const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '../uploads'), // added ../ to get one folder back
-      serveRoot: '/uploads/' //last slash was important
+      rootPath: join(__dirname, '..', '../uploads'),
+      serveRoot: '/uploads/'
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -26,7 +33,7 @@ const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
       username: process.env.PDATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [user,post],
+      entities: [user,post,role,temp_resetpassword],
       synchronize: true,
       ssl:{
         ca: fs.readFileSync(certPath),
@@ -35,7 +42,8 @@ const certPath = path.join(__dirname, '../public/db-cert/ca-certificate.crt');
     AuthModule,
     PostModule,
     UploadsModule,
-    UserModule
+    UserModule,
+    RoleModule,
   ],
 
   controllers: [AppController],

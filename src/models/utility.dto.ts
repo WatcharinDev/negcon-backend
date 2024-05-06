@@ -50,3 +50,8 @@ export class access_token{
     @ApiProperty()
     role_name:string
 }
+
+export class reset_password{
+    @ApiProperty()
+    email:string
+}

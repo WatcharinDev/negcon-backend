@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, PrimaryColumn, Timestamp } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, PrimaryColumn, Timestamp, OneToMany } from 'typeorm';
+import { post } from './post.entity';
 
 @Entity()
 export class user {
@@ -25,12 +26,6 @@ export class user {
 
   @Column({ type: 'integer', nullable: true })
   role_id: number;
-
-  @Column({ type: 'varchar', length: 10, nullable: true })
-  role_code: string;
-
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  role_name: string;
 
   @CreateDateColumn({ type: 'date', name: 'birthday' })
   birthday: Date;

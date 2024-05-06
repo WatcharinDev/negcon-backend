@@ -25,14 +25,13 @@ export class UserService {
                     "user.last_name",
                     "user.role_id",
                     "user.role_code",
-                    "user.role_name",
                     "user.tel",
                     "user.birthday",
                     "user.introduction",
                 ])
                 .where("user.status = :status AND user.code = :code", { status: true, code: code })
                 .getOne();
-            const user: user_data = response
+            const user: user_data = {...response,role_name:"" ,role_code:""}
             return {
                 statusCode: HttpStatus.OK,
                 data: user,

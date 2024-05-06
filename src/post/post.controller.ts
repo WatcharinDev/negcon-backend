@@ -20,7 +20,7 @@ export class PostController {
     }
 
     @ApiOperation({ summary: 'Get Post', description: 'get all post by user' })
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     @Get("/get/all")
     GetAllPostsController(@Query('page') page: number = 1, @Query('size') size: number = 10, @Req() request: any,): response_data_list {
         return this.postService.getAllPosts(page, size) as unknown as response_data_list
